@@ -1,0 +1,23 @@
+{
+	"name": "DestinationDataset_yu8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "sample_processed.xml",
+				"container": "transcripts"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\"",
+			"firstRowAsHeader": true
+		},
+		"schema": {}
+	}
+}
