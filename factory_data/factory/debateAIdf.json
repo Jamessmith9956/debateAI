@@ -1,0 +1,9 @@
+{
+	"name": "debateAIdf",
+	"location": "australiaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7b55bf0e-27cc-4776-9340-aecf553deaed",
+		"tenantId": "838cbf11-316e-4fcb-9c4d-f01ddfaaa087"
+	}
+}
