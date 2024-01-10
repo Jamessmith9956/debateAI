@@ -50,6 +50,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+test/
 
 # Translations
 *.mo
@@ -160,7 +161,11 @@ cython_debug/
 #.idea/
 
 
+.vscode
+.vscode/*
+
 # Sample data
-sample.*
+sample*.*
+
 
 
