@@ -6,18 +6,17 @@
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Json",
+		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "sample_processed.xml",
+				"fileName": "sample_processed.txt",
 				"container": "transcripts"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"quoteChar": "\"",
 			"firstRowAsHeader": true
-		},
-		"schema": {}
+		}
 	}
 }

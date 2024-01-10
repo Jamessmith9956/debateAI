@@ -6,10 +6,12 @@
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Xml",
+		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "*",
+				"folderPath": "samples",
 				"container": "transcripts"
 			},
 			"encodingName": "UTF-8"
