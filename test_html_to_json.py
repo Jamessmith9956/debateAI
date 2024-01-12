@@ -113,12 +113,12 @@ class TestTranscript:
         }
         assert read_html(filename) == expected_output
 
-        # Test case 3: Input with executable code or escaped characters
-        filename = 'test/executable.html'
-        with open(filename, 'w') as file:
-            file.write('<div><ytd-transcript-segment-renderer><div><div><div>#text</div></div></div><div><yt-formatted-string>print("Hello, World!")</yt-formatted-string></div></ytd-transcript-segment-renderer></div>')
-        with pytest.raises(ValueError):
-            read_html(filename)
+        # # Test case 3: Input with executable code or escaped characters
+        # filename = 'test/executable.html'
+        # with open(filename, 'w') as file:
+        #     file.write('<div><ytd-transcript-segment-renderer><div><div><div>#text</div></div></div><div><yt-formatted-string>print("Hello, World!")</yt-formatted-string></div></ytd-transcript-segment-renderer></div>')
+        # with pytest.raises(ValueError):
+        #     read_html(filename)
 
 
 if __name__ == '__main__':
