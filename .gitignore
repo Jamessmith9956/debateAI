@@ -165,7 +165,9 @@ cython_debug/
 .vscode/*
 
 # Sample data
-sample*.*
+sample**.*
 
 
+.vscode
+.vscode/*
 
