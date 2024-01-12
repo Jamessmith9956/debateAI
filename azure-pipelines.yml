@@ -5,13 +5,10 @@
 
 trigger:
 - main
+- feature/*
 
 pool:
   vmImage: ubuntu-latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Build Step'
 
 - script: |
     echo Add other tasks to build your project.
@@ -21,10 +18,6 @@ steps:
 - script: |
     pip install -r requirements.txt
   displayName: 'Install Requirements Step'
-
-- script: |
-    pip install pytest
-  displayName: 'Install Pytest Step'
 
 - script: |
     pytest -k "test_*.py"
