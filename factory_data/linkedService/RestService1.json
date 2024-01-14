@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "dataupload",
+			"url": "http://api.dataupload",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
