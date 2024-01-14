@@ -6,16 +6,7 @@
 		"typeProperties": {
 			"url": "dataupload",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Basic",
-			"userName": "datafactoryaccount123457",
-			"password": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "AzureKeyVault1",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "newkey"
-			}
+			"authenticationType": "Anonymous"
 		}
 	}
 }
