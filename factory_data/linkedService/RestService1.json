@@ -1,0 +1,21 @@
+{
+	"name": "RestService1",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "dataupload",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Basic",
+			"userName": "datafactoryaccount123457",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "newkey"
+			}
+		}
+	}
+}
