@@ -9,6 +9,8 @@ resources:
 - repo: self
 
 variables:
+  azureSubscription: 'Azure for Students(11aa7f42-758e-4de7-8fd4-2bd43dd4f08d)'
+  appName: 'debateAIApi'
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '0ef70ead-7770-4704-bc16-a31dd5a299e2'
   imageRepository: 'deploywebapidocker'
@@ -37,3 +39,8 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        containers: '$(containerRegistry)/$(imageRepository):$(tag)'
