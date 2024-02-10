@@ -11,8 +11,11 @@ namespace DebateAIApi
         private readonly string _key;
         private readonly BlobContainerClient _filesContainter;
 
-        public FileService()
+        public FileService(IConfiguration configuration)
         {
+            // pull from config 
+            _storageAccount = configuration.GetValue<string>("StorageAccount");
+            _key = configuration.GetValue<string>("StorageKey");
             var credential = new StorageSharedKeyCredential(_storageAccount, _key);
             var blobUri = $"https://{_storageAccount}.blob.core.windows.net";
             var blobServiceClient = new BlobServiceClient(new Uri(blobUri), credential);
