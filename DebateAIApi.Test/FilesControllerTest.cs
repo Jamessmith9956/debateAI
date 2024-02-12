@@ -4,6 +4,7 @@ using DebateAIApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using Moq;
 
 namespace DebateAIApi.Test
 {
@@ -11,8 +12,9 @@ namespace DebateAIApi.Test
     {
         IConfiguration _configuration;
         SecretsProvider _secretProvider;
+        private Mock<IFileService> _serviceMock;
         FilesController _controller;
-        FileService _service;
+        //IFileService _service;
 
         public FilesControllerTest()
         {
@@ -27,20 +29,31 @@ namespace DebateAIApi.Test
             builder.GetFileProvider();
             _configuration = builder.Build();
             
-            _secretProvider = new SecretsProvider(_configuration.GetSection("KeyVaultURL").Value!);
-            _service = new FileService(_configuration, _secretProvider);
-            _controller = new FilesController(_service);
+            //_secretProvider = new SecretsProvider(_configuration.GetSection("KeyVaultURL").Value!);
+            _serviceMock = new Mock<IFileService>(); 
+            var blobList = new List<BlobDto>
+            {
+                new BlobDto { Name = "test1", Uri = "https://test1.com", ContentType = "text/plain" },
+                new BlobDto { Name = "test2", Uri = "https://test2.com", ContentType = "text/plain" },
+                new BlobDto { Name = "test3", Uri = "https://test3.com", ContentType = "text/plain" }
+            };
+            _serviceMock.Setup(x => x.ListAsync()).ReturnsAsync(blobList);
+            _controller = new FilesController(_serviceMock.Object);
         }
 
         [Fact]
-        public void ListAllBlobsTest()
+        public async Task ListAllBlobsTestAsync()
         {
-            var result = _controller.ListAllBlobs();
+            var result = await _controller.ListAllBlobs();
 
             Assert.NotNull(result);
-            Assert.IsType<OkObjectResult>(result.Result);
+            Assert.IsType<OkObjectResult>(result);
             // then check contents of result
-            Assert.IsType<List<BlobDto>>(result);
+            // break open the result and check the contents
+            var okResult = result as OkObjectResult;
+            var blobList = okResult.Value as List<BlobDto>;
+
+            Assert.Equal(3, blobList.Count());
         }
 
         [Fact]

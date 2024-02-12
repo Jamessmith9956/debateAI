@@ -7,9 +7,9 @@ namespace DebateAIApi.Controllers
     public class FilesController : ControllerBase
     {
 
-        private readonly FileService _fileservice;
+        private readonly IFileService _fileservice; // interface the file service for spoofing
 
-        public FilesController(FileService fileservice)
+        public FilesController(IFileService fileservice)
         {
             _fileservice = fileservice;
         }

@@ -4,6 +4,7 @@ using System;
 
 namespace DebateAIApi
 {
+    // switch to user secrets in development, do this via a IServiceProvider
     public class SecretsProvider
     {
         private readonly SecretClient _secretClient;

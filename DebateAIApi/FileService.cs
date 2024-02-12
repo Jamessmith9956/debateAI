@@ -4,8 +4,15 @@ using Azure.Storage.Blobs.Models;
 
 namespace DebateAIApi
 {
+    public interface IFileService
+    {
+        Task<BlobResponseDto> DeleteAsync(string filename);
+        Task<BlobDto> DownloadAsync(string filename);
+        Task<List<BlobDto>> ListAsync();
+        Task<BlobResponseDto> UploadAsync(IFormFile file);
+    }
     // ripped from https://www.youtube.com/watch?v=DzQ7CNnb9yM
-    public class FileService
+    public class FileService: IFileService
     {
         private readonly string _storageAccount;
         private readonly string _key;
