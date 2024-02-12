@@ -11,11 +11,11 @@ namespace DebateAIApi
         private readonly string _key;
         private readonly BlobContainerClient _filesContainter;
 
-        public FileService(IConfiguration configuration)
+        public FileService(IConfiguration configuration, SecretsProvider secretsProvider)
         {
-            // pull from config 
-            _storageAccount = configuration.GetValue<string>("StorageAccount");
-            _key = configuration.GetValue<string>("StorageKey");
+            // pull from secrets provider 
+            _storageAccount = configuration.GetValue<string>("Storage:Name");
+            _key = secretsProvider.GetSecret(_storageAccount);
             var credential = new StorageSharedKeyCredential(_storageAccount, _key);
             var blobUri = $"https://{_storageAccount}.blob.core.windows.net";
             var blobServiceClient = new BlobServiceClient(new Uri(blobUri), credential);
@@ -28,16 +28,11 @@ namespace DebateAIApi
 
             await foreach (var blobItem in _filesContainter.GetBlobsAsync())
             {
-                var blobClient = _filesContainter.GetBlobClient(blobItem.Name);
-                var blobDownloadInfo = await blobClient.DownloadAsync();
-                var blob = new BlobDto
-                {
+                files.Add(new BlobDto {
+                    Uri = $"{_filesContainter.Uri.ToString()}/{blobItem.Name}",
                     Name = blobItem.Name,
-                    Uri = blobClient.Uri.AbsoluteUri,
-                    ContentType = blobDownloadInfo.Value.ContentType,
-                    Content = blobDownloadInfo.Value.Content // not sure if this is correct
-                };
-                files.Add(blob);
+                    ContentType = blobItem.Properties.ContentType
+                });
             }
             return files;
         }
