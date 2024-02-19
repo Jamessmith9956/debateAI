@@ -29,7 +29,7 @@ namespace DebateAIApi.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpGet]
         [Route("filename")]
         public async Task<IActionResult> Download(string filename)

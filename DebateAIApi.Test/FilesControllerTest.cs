@@ -1,10 +1,12 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using DebateAIApi.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
+using System.Text;
 
 namespace DebateAIApi.Test
 {
@@ -29,7 +31,6 @@ namespace DebateAIApi.Test
             builder.GetFileProvider();
             _configuration = builder.Build();
             
-            //_secretProvider = new SecretsProvider(_configuration.GetSection("KeyVaultURL").Value!);
             _serviceMock = new Mock<IFileService>(); 
             var blobList = new List<BlobDto>
             {
@@ -44,8 +45,10 @@ namespace DebateAIApi.Test
         [Fact]
         public async Task ListAllBlobsTestAsync()
         {
+            //Arrange
+            //Act
             var result = await _controller.ListAllBlobs();
-
+            //Assert
             Assert.NotNull(result);
             Assert.IsType<OkObjectResult>(result);
             // then check contents of result
@@ -57,21 +60,48 @@ namespace DebateAIApi.Test
         }
 
         [Fact]
-        public void UploadTest()
+        public async Task UploadTest()
         {
-            Assert.True(false);
+            //Arrange
+            var fileMock = new Mock<IFormFile>();
+            fileMock.Setup(f => f.FileName).Returns("test.txt");
+            //Act
+            var result = await _controller.Upload(fileMock.Object);
+            //Assert result is ok 200
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public void DownloadTest()
+        public async Task DownloadTest() // Please Check
         {
-            Assert.True(false);
+            //Arrange
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes("This is a test"));
+            _serviceMock.Setup(x => x.DownloadAsync("test.txt"))
+                .ReturnsAsync(new BlobDto { Name = "test.txt", Content = stream, ContentType = "text/plain" });
+            //Act
+            var result = await _controller.Download("test.txt");
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<FileStreamResult>(result);
+            var fileResult = result as FileStreamResult;
+            Assert.Equal("test.txt", fileResult.FileDownloadName);
+            Assert.Equal("text/plain", fileResult.ContentType);
+            Assert.Equal(stream, fileResult.FileStream);
         }
 
         [Fact]
-        public void DeleteTest()
+        public async Task DeleteTest()
         {
-            Assert.True(false);
+            //Arrange
+
+            //Act
+            var result = await _controller.Delete("test.txt");
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result);
+            
         }
     }
 }
