@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DebateAIApi.Test": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "https://+:443;https://+:80"
+      }
+    }
+  }
+}
