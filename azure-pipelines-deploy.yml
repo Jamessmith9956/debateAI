@@ -16,6 +16,7 @@ variables:
   imageRepository: 'deploywebapidocker'
   containerRegistry: 'sampleappcontainerregistry.azurecr.io'
   dockerfilePath: '**/Dockerfile'
+  context: './debateAIApi'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -35,7 +36,8 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
+        context: $(context)
+        dockerfile: $(context)/$(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
