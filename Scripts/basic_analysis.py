@@ -71,4 +71,13 @@ def plot_wpm(wpm):
     plt.savefig("wpm.png")
 
 
+
+# from text_to_json import parse_api_transcript
+# with open('./tests/scripts.tests/samples/sample.txt', 'r') as f:
+#     data = f.read()
+
+# cards = parse_api_transcript(data)
+# wpms = wpm(cards)
+# plot_wpm(wpms)
+
     
