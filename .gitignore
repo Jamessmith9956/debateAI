@@ -217,6 +217,16 @@ csx/
 ecf/
 rcf/
 
+# Azurite Files (note - https://github.com/Azure/Azurite/pull/1061)
+__azurite_db_blob_extent__.json
+__azurite_db_blob__.json
+__azurite_db_queue__.json
+__azurite_db_table__.json
+__azurite_db_queue_extent__.json
+__blobstorage__
+__queuestorage__
+
+
 # Windows Store app package directories and files
 AppPackages/
 BundleArtifacts/
@@ -644,13 +654,14 @@ cython_debug/
 #.idea/
 
 
-.vscode
+
 .vscode/*
 
 # Sample data
 sample**.*
 
 
-.vscode
-.vscode/*
 
+.vscode/*
+#package-lock.json
+#package.json
