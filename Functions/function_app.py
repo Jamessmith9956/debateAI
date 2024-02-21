@@ -1,7 +1,6 @@
 import azure.functions as func
 import logging
-from youtube_transcript_api import YouTubeTranscriptApi
-from youtube_transcript_api.formatters import JSONFormatter
+from extract_transcript import get_transcript
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -19,10 +18,8 @@ def extract_yt_transcript(req: func.HttpRequest) -> func.HttpResponse:
             id = req_body.get('id')
 
     if id:
-        formatter = JSONFormatter()
-        data = YouTubeTranscriptApi.get_transcript(id)
-        json = formatter.format_transcript(data)
-        return func.HttpResponse(f"HTTP triggered function for video ID:({id}) executed successfully. \n here is the json: \n {json}")
+        transcript = get_transcript(id)
+        return func.HttpResponse(f"HTTP triggered function for video ID:({id}) executed successfully. \n here is the json: \n {transcript}")
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass an ID in the query string or in the request body for to retrieve a YT transcript.",
